@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Bumpy Roads Overlay",
+  "version": "0.1.0",
+  "description": "Overlay community road-roughness data from Bumpy Roads on top of bikestreets.com and OpenStreetMap.",
+  "host_permissions": [
+    "https://bumpyroads.org/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://bikestreets.com/*",
+        "https://*.openstreetmap.org/*"
+      ],
+      "js": ["overlay.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Bumpy Roads Overlay",
+    "default_popup": "popup.html"
+  }
+}
