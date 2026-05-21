@@ -15,17 +15,37 @@ existing approved bike-routing networks.
 
 ## Install (Chrome / Edge / Brave / Arc)
 
-The extension isn't on the Chrome Web Store. Load it as an unpacked extension:
+The extension isn't on the Chrome Web Store. You load it manually — takes
+about a minute, no command line needed.
 
-1. Clone or download this repo: `git clone https://github.com/adamdavies1915/bumpy-roads-overlay`
-2. Open `chrome://extensions/` (or `brave://extensions/`, etc.).
-3. Toggle **Developer mode** on (top-right).
-4. Click **Load unpacked** and pick the folder you just cloned.
-5. Visit one of the supported sites and zoom in to at least zoom 12 — the
-   colored cells fade in.
+1. **Download the extension.** Click here:
+   👉 **[Download ZIP](https://github.com/adamdavies1915/bumpy-roads-overlay/archive/refs/heads/main.zip)**
+   (Or do it from the repo page: click the green **"<> Code"** button → **Download ZIP**.)
+2. **Unzip it.** Double-click the downloaded file. You'll get a folder named
+   `bumpy-roads-overlay-main`. Move it somewhere you won't accidentally delete
+   it (your `Documents` folder is fine) — the browser reads the files from
+   that folder, so if you trash the folder the extension breaks.
+3. **Open your browser's extensions page.** Paste the right URL for your
+   browser into the address bar and hit Enter:
+   - Chrome: `chrome://extensions/`
+   - Brave: `brave://extensions/`
+   - Edge: `edge://extensions/`
+   - Arc: `arc://extensions/`
+4. **Turn on Developer mode** (toggle in the top-right corner of the
+   extensions page).
+5. **Click "Load unpacked"** (button in the top-left of the extensions page).
+   Pick the `bumpy-roads-overlay-main` folder you unzipped in step 2.
+6. **Test it.** Visit [bikestreets.com/la/new-orleans](https://bikestreets.com/la/new-orleans/)
+   and zoom in. Colored squares should fade in over the streets.
 
-Toggle the overlay on/off with the **Bumpy Roads: On** chip in the top-right
-of the map.
+That's it. Toggle the overlay on/off with the **Bumpy Roads: On** chip in
+the top-right of the map.
+
+### Updating
+
+Re-download the ZIP, unzip it (overwriting the old folder), then go back to
+your extensions page and click the **↻ reload** button on the Bumpy Roads
+Overlay tile.
 
 ## What the colors mean
 
