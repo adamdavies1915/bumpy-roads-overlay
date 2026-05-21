@@ -35,7 +35,7 @@ about a minute, no command line needed.
    extensions page).
 5. **Click "Load unpacked"** (button in the top-left of the extensions page).
    Pick the `bumpy-roads-overlay-main` folder you unzipped in step 2.
-6. **Test it.** Visit [bikestreets.com/la/new-orleans](https://bikestreets.com/la/new-orleans/)
+6. **Test it.** Visit [[bikestreets.com/la/new-orleans](https://bikestreets.com/la/new-orleans/)](https://bikestreets.com/internal/admin/network/edit)
    and zoom in. Colored squares should fade in over the streets.
 
 That's it. Toggle the overlay on/off with the **Bumpy Roads: On** chip in
