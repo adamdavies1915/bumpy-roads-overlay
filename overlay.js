@@ -86,22 +86,6 @@
     return { south, west, north, east };
   }
 
-  // Hash parsers, shared across adapters.
-  //
-  // MapLibre/Mapbox hash plugin format: #zoom/lat/lng[/bearing/pitch]
-  function parseMaplibreHash(hash) {
-    const m = hash.replace(/^#/, "").split("/");
-    if (m.length < 3) return null;
-    const z = parseFloat(m[0]);
-    const lat = parseFloat(m[1]);
-    const lng = parseFloat(m[2]);
-    const bearing = m.length > 3 ? parseFloat(m[3]) : 0;
-    const pitch = m.length > 4 ? parseFloat(m[4]) : 0;
-    if (!Number.isFinite(z) || !Number.isFinite(lat) || !Number.isFinite(lng)) {
-      return null;
-    }
-    return { zoom: z, lat, lng, bearing: bearing || 0, pitch: pitch || 0 };
-  }
   // OSM / iD hash format: #...&map=zoom/lat/lng (with any leading &-separated keys).
   function parseOsmHash(hash) {
     const m = /map=([\d.]+)\/(-?[\d.]+)\/(-?[\d.]+)/.exec(hash);
@@ -115,53 +99,15 @@
     };
   }
 
-  // Site adapters: how to find the map container and parse zoom/center.
-  // Order matters — more specific matches first.
-  const SITES = {
-    // Bikestreets internal network editor — uses iD (OSM editor). iD updates
-    // the URL hash continuously during pan, so the overlay tracks smoothly.
-    bikestreetsEdit: {
-      match: () =>
-        location.hostname === "bikestreets.com" &&
-        location.pathname.includes("/internal/admin/network/edit"),
-      // iD's `.supersurface` is the only element whose bounding rect matches
-      // the visible map area (sidebar excluded). Return null until it exists
-      // so `waitFor` keeps polling rather than caching the outer
-      // `#id-container` (which includes the sidebar).
-      container: () => document.querySelector("#id-container .supersurface"),
-      parseHash: parseOsmHash,
-      liveHash: true,
-    },
-    // openstreetmap.org/edit — also iD.
-    osmEdit: {
-      match: () =>
-        location.hostname.endsWith("openstreetmap.org") &&
-        location.pathname.startsWith("/edit"),
-      container: () => document.querySelector("#id-container .supersurface"),
-      parseHash: parseOsmHash,
-      liveHash: true,
-    },
-    // Public bikestreets routing map — MapLibre, ESM-imported so the map
-    // instance is sealed inside its module closure (no global, no DOM
-    // backlink, search-box doesn't expose it). We're stuck with URL-hash
-    // polling, which only updates on `moveend` — overlay snaps after release.
-    bikestreets: {
-      match: () => location.hostname === "bikestreets.com",
-      container: () => document.getElementById("map"),
-      parseHash: parseMaplibreHash,
-      liveHash: false,
-    },
-    // Public OSM main map — Leaflet, hash only on moveend.
-    osm: {
-      match: () => location.hostname.endsWith("openstreetmap.org"),
-      container: () => document.getElementById("map"),
-      parseHash: parseOsmHash,
-      liveHash: false,
-    },
+  // iD's `.supersurface` is the only element whose bounding rect matches
+  // the visible map area (sidebar excluded). Return null until it exists
+  // so `waitFor` keeps polling rather than caching the outer
+  // `#id-container` (which includes the sidebar).
+  const site = {
+    container: () => document.querySelector("#id-container .supersurface"),
+    parseHash: parseOsmHash,
+    liveHash: true,
   };
-
-  const site = Object.values(SITES).find((s) => s.match());
-  if (!site) return; // Should be filtered by manifest matches, but defensive.
 
   const tileCache = new Map(); // key "z/x/y" -> { gridSize, cells }
   const inflight = new Map(); // key -> AbortController

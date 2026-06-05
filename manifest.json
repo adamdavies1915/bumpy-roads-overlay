@@ -11,8 +11,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://bikestreets.com/*",
-        "https://*.openstreetmap.org/*"
+        "https://bikestreets.com/internal/admin/network/edit*"
       ],
       "js": ["overlay.js"],
       "css": ["overlay.css"],
